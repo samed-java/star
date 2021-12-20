@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:star/models/product.dart';
 
-class Basket{
+class BasketModel{
   late String table_id;
   late List<Product> products;
 

@@ -6,7 +6,9 @@ class Basket extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+
       decoration: BoxDecoration(
+          color: Colors.transparent,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(15), topRight: Radius.circular(15),)
       ),
@@ -19,6 +21,7 @@ class Basket extends StatelessWidget {
           .size
           .height,
       child: Container(
+        color: Colors.white,
         alignment: Alignment.bottomCenter,
         width: MediaQuery
             .of(context)
