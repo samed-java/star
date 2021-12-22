@@ -1,20 +1,30 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:star/helper/Helper.dart';
 import 'package:star/models/product.dart';
+import 'package:star/models/table.dart';
 
-class TableService{
-  static getData(String url) async{
-    try{
-      var request = await http.get(Uri.parse(url));
-      if(request.statusCode == 200){
-        if(request.body.isNotEmpty){
+class TableService {
+  static Future<TableModel> getData() async {
+    try {
+      var request = await http.get(Uri.parse(Helper.base_url + Helper.table));
+      if (request.statusCode == 200) {
+        if (request.body.isNotEmpty) {
           var data = json.decode(request.body);
-          return Product.fromJson(data);
+          print(request.body);
+          return TableModel.fromJson(data);
+        }
+        else{
+          throw Error();
         }
       }
-    }on Exception catch(_){
-      print("error on getting table");
+      else {
+        throw Error();
+      }
+    } on Exception catch (e) {
+      print(e);
+      throw Error();
     }
   }
 }

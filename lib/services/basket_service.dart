@@ -8,9 +8,9 @@ import 'package:star/models/basket.dart';
 
 
 class BasketService{
-  static postData(String url , Map<String , dynamic> data)
+  static postData( Map<String , dynamic> data)
   async{
-    var request = await http.post(Uri.parse(url),headers:<String,String>{
+    var request = await http.post(Uri.parse(Helper.base_url+Helper.basket),headers:<String,String>{
       HttpHeaders.contentTypeHeader: '/app/basket'
     }, body: data);
     print(request.statusCode);
