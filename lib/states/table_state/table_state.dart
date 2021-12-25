@@ -14,7 +14,9 @@ class LoadingState extends TableState{
 
 class LoadedState extends TableState{
   late Future<TableModel> table;
-  LoadedState(this.table);
+  LoadedState(this.table){
+    print( "table is: ${this.table.toString()}");
+  }
 }
 
 class ErrorState extends TableState{

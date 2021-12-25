@@ -1,8 +1,8 @@
 class TableModel{
   late String id;
   late String name;
-  late bool is_empty;
-  late bool on_progress;
+  late int is_empty;
+  late int on_progress;
 
   TableModel({
     required this.id,
@@ -14,11 +14,15 @@ class TableModel{
 
   factory TableModel.fromJson(dynamic json){
     return TableModel(
-        id: json["table_id"],
+        id: json["table_id"].toString(),
         name: json["table_name"],
         is_empty: json["is_empty"],
         on_progress: json["on_progress"]
     );
   }
 
+  @override
+  String toString() {
+    return 'TableModel{id: $id, name: $name, is_empty: $is_empty, on_progress: $on_progress}';
+  }
 }

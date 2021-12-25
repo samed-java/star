@@ -73,7 +73,7 @@ class Basket extends StatelessWidget {
                     )),
               ),
             ),
-            CustomScrollView(),
+            SingleChildScrollView(),
             Container(
                 alignment: Alignment.bottomCenter,
                 width: MediaQuery

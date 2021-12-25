@@ -18,11 +18,11 @@ class Product {
     return Product(
         id : json['product_id'],
         name : json['product_name'],
-        price : json['product_cost'],
+        price : json['product_cost'].toString(),
         image : json['product_image'],
         );
   }
-  late String id;
+  late int id;
   late String name;
   late String price;
   late String image;

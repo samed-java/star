@@ -48,7 +48,7 @@ class _QRCodeScanState extends State<QRCodeScan> {
             child: Center(
               child: (result != null)
                   ? Text(
-                  'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}')
+                      'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}')
                   : Text('Scan a code'),
             ),
           )
@@ -65,12 +65,11 @@ class _QRCodeScanState extends State<QRCodeScan> {
         print(result!.code);
         Helper.table = result!.code!;
         print(Helper.table + '>>>>>>>');
-        if(Helper.table!=''){
+        if (Helper.table != '') {
           BlocProvider.of<TableCubit>(context).getData();
           Navigator.pop(context);
           controller.dispose();
         }
-
       });
     });
   }

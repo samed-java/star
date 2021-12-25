@@ -9,6 +9,9 @@ class ProductService{
       if(request.statusCode == 200){
         if(request.body != null){
           var data = json.decode(request.body);
+          print(data);
+          var d = (data as List).map((e) => Product.fromJson(e)).toList();
+          print(d);
           return (data as List).map((e) => Product.fromJson(e)).toList();
         }
         else{

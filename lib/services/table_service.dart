@@ -9,10 +9,12 @@ class TableService {
   static Future<TableModel> getData() async {
     try {
       var request = await http.get(Uri.parse(Helper.base_url + Helper.table));
+      print(request.statusCode);
       if (request.statusCode == 200) {
         if (request.body.isNotEmpty) {
           var data = json.decode(request.body);
           print(request.body);
+          print(TableModel.fromJson(data).name);
           return TableModel.fromJson(data);
         }
         else{
@@ -24,7 +26,7 @@ class TableService {
       }
     } on Exception catch (e) {
       print(e);
-      throw Error();
+      throw e;
     }
   }
 }
