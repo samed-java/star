@@ -4,7 +4,7 @@ import 'package:star/models/product.dart';
 
 class BasketModel{
   late String table_id;
-  late List<Product> products;
+  List<Product> products = List.empty();
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

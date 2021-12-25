@@ -7,23 +7,23 @@ import 'package:star/view/basket/basket.dart';
 class BasketCubit extends Cubit<BasketState> {
   late BasketModel basket;
 
-  BasketCubit() : super(InitState());
+  BasketCubit() : super(BInitState());
 
   void setData(BasketModel basket) {
     try {
       this.basket = basket;
-      emit(LoadingState(basket));
+      emit(BLoadingState(basket));
     } on Exception catch (e) {
-      emit(ErrorState(e));
+      emit(BErrorState(e));
     }
   }
 
   void sendData() {
     try {
       BasketService.postData(this.basket.toJson());
-      emit(LoadedState());
+      emit(BLoadedState());
     } on Exception catch (e) {
-      emit(ErrorState(e));
+      emit(BErrorState(e));
     }
   }
 }

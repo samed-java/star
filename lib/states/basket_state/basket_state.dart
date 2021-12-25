@@ -5,20 +5,20 @@ abstract class BasketState{
   BasketState();
 }
 
-class InitState extends BasketState{
-  InitState();
+class BInitState extends BasketState{
+  BInitState();
 }
 
-class LoadingState extends BasketState{
+class BLoadingState extends BasketState{
   late BasketModel basket;
-  LoadingState(this.basket);
+  BLoadingState(this.basket);
 }
 
-class LoadedState extends BasketState{
-  LoadedState();
+class BLoadedState extends BasketState{
+  BLoadedState();
 }
 
-class ErrorState extends BasketState{
+class BErrorState extends BasketState{
   late Exception e;
-  ErrorState(this.e);
+  BErrorState(this.e);
 }

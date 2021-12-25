@@ -15,10 +15,10 @@ class TableCubit extends Cubit<TableState> {
       if(Helper.table!='') {
         emit(LoadingState());
         print("load");
-        Timer.periodic(Duration(seconds: 1), (timer) {
+
           Future<TableModel> table = TableService.getData() as Future<TableModel>;
           emit(LoadedState(table));
-        });
+
       }
     } on Exception catch (e) {
       emit(ErrorState(e));
