@@ -18,10 +18,12 @@ class BasketCubit extends Cubit<BasketState> {
     }
   }
 
-  void sendData() {
+  void sendData(Map<String,dynamic> data) {
     try {
-      BasketService.postData(this.basket.toJson());
+      print(data);
+      BasketService.postData(data);
       emit(BLoadedState());
+      emit(BInitState());
     } on Exception catch (e) {
       emit(BErrorState(e));
     }

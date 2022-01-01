@@ -62,9 +62,9 @@ class _QRCodeScanState extends State<QRCodeScan> {
     controller.scannedDataStream.listen((scanData) {
       setState(() {
         result = scanData;
-        print(result!.code);
+        // print(result!.code);
         Helper.table = result!.code!;
-        print(Helper.table + '>>>>>>>');
+        // print(Helper.table + '>>>>>>>');
         if (Helper.table != '') {
           BlocProvider.of<TableCubit>(context).getData();
           Navigator.pop(context);

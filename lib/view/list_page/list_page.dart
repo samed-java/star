@@ -191,7 +191,8 @@ class _ListPageState extends State<ListPage> {
                                 trailing: GestureDetector(
                                   onTap: () {
                                     if (basket_.table_id != null) {
-                                      if (!basket_.products.contains((snapshot.data
+
+                                      if (basket_.products !=null && !basket_.products.contains((snapshot.data
                                       as List<Product>)[index])) {
                                         basket_.products.add((snapshot.data
                                             as List<Product>)[index]);
@@ -232,15 +233,88 @@ class _ListPageState extends State<ListPage> {
           // height of the sheet.
           return BlocConsumer<BasketCubit, BasketState>(
               listener: (context, state) {
+
             if (state is BErrorState) {
               throw state.e;
             }
+            else if(state is BInitState){
+              basket_.products = <Product>[];
+            }
           }, builder: (context, state) {
             if (state is BInitState) {
+              basket_.products = <Product>[];
               return Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 60,
-                  child: Text('No Any Item'));
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height - 100,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 80,
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 10, right: 10,top: 10),
+                        child: Center(
+                          child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: 60,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children:[
+                                  Text(
+                                    "Total item: 0",
+                                    style: TextStyle(fontSize: 30),
+                                  ),
+
+
+                                ],
+                              )),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height-250,
+
+                      child: Center(
+                        child: Text(
+                          "No any item",
+                          style: TextStyle(
+                            fontSize: 50
+                          ),
+                        ),
+                      ),
+
+                    ),
+                    Container(
+                        alignment: Alignment.bottomCenter,
+                        width: MediaQuery.of(context).size.width,
+                        height: 70,
+                        child: Center(
+                          child: GestureDetector(
+                            onTap:() {
+                            },
+                            child: Container(
+                              width: 200,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.yellow),
+                              child: Center(
+                                child: Text(
+                                  "Order now",
+                                  style: TextStyle(
+                                      fontSize: 40,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                          ),
+                        )),
+                  ],
+                ),
+              );
             } else if (state is BLoadingState) {
               return Container(
                 width: MediaQuery.of(context).size.width,
@@ -250,35 +324,48 @@ class _ListPageState extends State<ListPage> {
                   children: [
                     Container(
                       width: MediaQuery.of(context).size.width,
-                      height: 60,
+                      height: 80,
                       child: Padding(
                         padding: EdgeInsets.only(left: 10, right: 10),
-                        child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: 60,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children:[
-                                Text(
-                                  "Total item:",
-                                  style: TextStyle(fontSize: 30),
-                                ),
-                                Text(
-                                  " ${ state.basket == null? 0 :state.basket.products!=null?state.basket.products.length: 0 }",
-                                  style: TextStyle(fontSize: 30),
-                                ),
-                                Text(
-                                  "Total cost",
-                                  style: TextStyle(fontSize: 30),
-                                ),
-                                Text(
-                                  "10",
-                                  style: TextStyle(fontSize: 30),
-                                ),
-                              ],
-                            )),
+                        child: Center(
+                          child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: 60,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children:[
+                                  Text(
+                                    "Total item: ${state.basket.products.length}",
+                                    style: TextStyle(fontSize: 30),
+                                  ),
+
+
+                                ],
+                              )),
+                        ),
                       ),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height-250,
+
+                        child: ListView.builder(
+                            itemCount: state.basket.products.length,
+                            itemBuilder: (context ,index){
+                              return Card(
+                                elevation: 2,
+                                child: ListTile(
+                                  title: Text(
+                                      state.basket.products[index].name),
+                                  subtitle: Text(
+                                      state.basket.products[index]
+                                          .price),
+
+                                ),
+                              );
+                            }),
+
                     ),
                     Container(
                         alignment: Alignment.bottomCenter,
@@ -286,7 +373,7 @@ class _ListPageState extends State<ListPage> {
                         height: 70,
                         child: Center(
                           child: GestureDetector(
-                            onTap: () {},
+                            onTap:()=> BlocProvider.of<BasketCubit>(context).sendData(state.basket.toJson()),
                             child: Container(
                               width: 200,
                               height: 50,
@@ -308,6 +395,7 @@ class _ListPageState extends State<ListPage> {
                 ),
               );
             } else if (state is LoadedState) {
+              basket_.products = <Product>[];
               return Container(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height - 100,
@@ -334,14 +422,8 @@ class _ListPageState extends State<ListPage> {
                                   "0",
                                   style: TextStyle(fontSize: 30),
                                 ),
-                                Text(
-                                  "Total cost",
-                                  style: TextStyle(fontSize: 30),
-                                ),
-                                Text(
-                                  "0",
-                                  style: TextStyle(fontSize: 30),
-                                ),
+
+
                               ],
                             )),
                       ),
@@ -352,7 +434,7 @@ class _ListPageState extends State<ListPage> {
                         height: 70,
                         child: Center(
                           child: GestureDetector(
-                            onTap: () {},
+                            onTap: (){},
                             child: Container(
                               width: 200,
                               height: 50,

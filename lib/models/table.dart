@@ -4,6 +4,9 @@ class TableModel{
   late int is_empty;
   late int on_progress;
 
+
+  TableModel.emp();
+
   TableModel({
     required this.id,
     required this.name ,
